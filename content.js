@@ -24,7 +24,8 @@
     "ytd-rich-shelf-renderer",
     "ytd-rich-section-renderer",
     "ytd-horizontal-card-list-renderer",
-    "ytd-shelf-renderer"
+    "ytd-shelf-renderer",
+    "grid-shelf-view-model"
   ].join(",");
 
   const CARD_SELECTOR = [
@@ -34,6 +35,8 @@
     "ytd-grid-video-renderer",
     "ytd-compact-video-renderer",
     "ytd-playlist-video-renderer",
+    "ytm-shorts-lockup-view-model",
+    "ytm-shorts-lockup-view-model-v2",
     "yt-lockup-view-model"
   ].join(",");
 
@@ -50,6 +53,7 @@
     "ytd-reel-shelf-renderer",
     "ytd-horizontal-card-list-renderer",
     "ytd-shelf-renderer",
+    "grid-shelf-view-model",
     "ytd-item-section-renderer"
   ].join(",");
 
@@ -60,8 +64,12 @@
     "ytd-grid-video-renderer",
     "ytd-compact-video-renderer",
     "ytd-playlist-video-renderer",
+    "ytm-shorts-lockup-view-model",
+    "ytm-shorts-lockup-view-model-v2",
     "yt-lockup-view-model"
   ].join(",");
+
+  const SEARCH_SHORTS_SHELF_SELECTOR = "grid-shelf-view-model:has(ytm-shorts-lockup-view-model)";
 
   let cleanupQueued = false;
   let lastUrl = location.href;
@@ -141,6 +149,11 @@
       return reelShelf;
     }
 
+    const searchShortsShelf = link.closest(SEARCH_SHORTS_SHELF_SELECTOR);
+    if (searchShortsShelf) {
+      return searchShortsShelf;
+    }
+
     const card = link.closest(CARD_SELECTOR);
     if (card) {
       return card;
@@ -155,7 +168,9 @@
   }
 
   function hideKnownShortsShelves(root) {
-    const shelves = root.querySelectorAll?.("ytd-reel-shelf-renderer") ?? [];
+    const shelves = root.querySelectorAll?.(
+      `ytd-reel-shelf-renderer,${SEARCH_SHORTS_SHELF_SELECTOR}`
+    ) ?? [];
 
     for (const shelf of shelves) {
       hideElement(shelf);
