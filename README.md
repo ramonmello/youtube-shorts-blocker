@@ -71,3 +71,7 @@ Runs at `document_start` and coordinates the dynamic cleanup:
 This extension targets Chrome desktop on `www.youtube.com`.
 
 It is designed to remove visible Shorts distractions from the standard YouTube interface, not to be a hard bypass-proof content blocker.
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE).
